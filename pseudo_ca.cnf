@@ -1,0 +1,46 @@
+SERVER_FQDN = www.example.com # This line prevents openssl from erroring out if the ENV var isn't set
+DNS_SAN = ${ENV::SERVER_FQDN}
+
+[ req ]
+x509_extensions    = ca_extensions          # X509v3 extensions to add to the default (CA) cert
+distinguished_name = req_distinguished_name # this setting is required despite the /subj on the command line
+
+# Need an empty section to correspond to req::distinguished_name
+[ req_distinguished_name ]
+
+[ ca_extensions ]
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always,issuer:always
+basicConstraints        = critical,CA:true
+keyUsage                = cRLSign, keyCertSign
+
+[ server_extensions ]
+basicConstraints        = CA:FALSE
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid,issuer
+keyUsage                = digitalSignature, keyEncipherment
+subjectAltName          = DNS:${DNS_SAN}
+
+[ ca ]
+default_ca = rootCA
+
+[ rootCA ]
+dir             = ca
+private_key     = $dir/ca.key
+certificate     = $dir/ca.crt
+new_certs_dir   = $dir/issued_certs     # default place for new certs.
+database        = $dir/index.txt        # database index file.
+serial          = $dir/serial           # The current serial number
+default_md      = sha256                # which md to use.
+default_days    = 365                   # how long to certify for
+unique_subject  = yes                   # disallow issuing multiple active certs to same CN
+policy          = policy_anything
+
+[ policy_anything ]
+countryName             = optional
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
