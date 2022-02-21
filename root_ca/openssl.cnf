@@ -1,0 +1,43 @@
+[req]
+prompt = no
+distinguished_name = req_distinguished_name
+x509_extensions    = req_x509_extensions
+
+[req_distinguished_name]
+C    = US
+ST   = MO
+L    = St. Louis
+O    = World Wide Technology
+1.OU = Application Services
+2.OU = Internal Training
+CN   = Root CA
+
+[req_x509_extensions]
+basicConstraints       = critical,CA:true
+keyUsage               = cRLSign,keyCertSign
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always,issuer:always
+
+[ca]
+default_ca = root_ca
+
+[root_ca]
+default_md     = sha256
+default_days   = 1461 # about 4 years
+private_key    = root_ca.key.pem
+certificate    = root_ca.crt.pem
+dir            = ca_data
+new_certs_dir  = $dir/issued_certs
+database       = $dir/index.txt
+serial         = $dir/serial
+unique_subject = yes
+policy         = policy_same_org
+
+[ policy_same_org ]
+countryName             = supplied
+stateOrProvinceName     = supplied
+localityName            = supplied
+organizationName        = match
+organizationalUnitName  = match
+commonName              = supplied
+emailAddress            = optional
