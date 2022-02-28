@@ -25,7 +25,7 @@ ca_data/:
 	@mkdir -p $@/issued_certs
 	@touch $@/issued_certs/.gitkeep
 	@touch $@/index.txt
-	@echo "00" > $@/serial
+	@echo "01" > $@/serial
 
 .PHONY: sign
 sign: root_ca.crt.pem ca_data/
