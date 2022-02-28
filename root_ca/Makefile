@@ -4,9 +4,11 @@ ROOT_CA_VALIDITY_DAYS = 7305 # About 20 years
 .PHONY: default
 default: root_ca.crt.pem ca_data/
 
-.PHONY: clean
-clean:
-	@rm -rf root_ca.*.pem ca_data/
+.PHONY: clean clean_ca_data
+clean: clean_ca_data
+	@rm -rf root_ca.*.pem
+clean_ca_data:
+	@rm -rf ca_data/
 
 .PHONY: lint
 lint: root_ca.crt.pem
