@@ -22,7 +22,7 @@ default_ca = root_ca
 
 [root_ca]
 default_md     = sha256
-default_days   = 1461 # about 4 years
+default_days   = 3652 # about 10 years
 private_key    = root_ca.key.pem
 certificate    = root_ca.crt.pem
 dir            = ca_data
