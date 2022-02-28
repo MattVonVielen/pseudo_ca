@@ -14,9 +14,8 @@ CN   = Root CA
 
 [req_x509_extensions]
 basicConstraints       = critical,CA:true
-keyUsage               = cRLSign,keyCertSign
+keyUsage               = critical,cRLSign,keyCertSign,digitalSignature
 subjectKeyIdentifier   = hash
-authorityKeyIdentifier = keyid:always,issuer:always
 
 [ca]
 default_ca = root_ca
