@@ -32,3 +32,10 @@ task :generate_server, [:fqdn] => 'ca/ca.crt' do |t, args|
 
   rm_f csrfile
 end
+
+desc 'Self signed S/MIME'
+file 'smime/smime.crt' do
+  mkdir_p 'smime'
+  sh 'openssl genrsa -out smime/smime.key 2048'
+  sh "openssl req -new -key smime/smime.key -out smime/smime.crt -x509 -sha256 -days #{5 * 365} -extensions smime"
+end

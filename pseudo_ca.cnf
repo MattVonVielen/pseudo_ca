@@ -7,6 +7,14 @@ distinguished_name = req_distinguished_name # this setting is required despite t
 
 # Need an empty section to correspond to req::distinguished_name
 [ req_distinguished_name ]
+countryName = Country Name (2 letter code)
+countryName_default = US
+countryName_min = 2
+countryName_max = 2
+commonName = Common Name (e.g. server FQDN or YOUR name)
+commonName_max = 64
+emailAddress = Email Address
+emailAddress_max = 64
 
 [ ca_extensions ]
 subjectKeyIdentifier    = hash
@@ -44,3 +52,11 @@ organizationName        = optional
 organizationalUnitName  = optional
 commonName              = supplied
 emailAddress            = optional
+
+[smime]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+subjectAltName = email:copy
+extendedKeyUsage = emailProtection
